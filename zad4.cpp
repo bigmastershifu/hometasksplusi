@@ -76,7 +76,7 @@ class IPv4 {
     int d = 0;
     char d1, d2, d3;
     std::cin >> a >> d1 >> b >> d2 >> c >> d3 >> d;
-    if (std::cin and d1 == '.' and d2 == '.' and d3 == '.' and a >= 0 && a <= 255 and b >= 0 and b <= 255 and c >= 0 and c <= 255 and d >= 0 and d <= 255) {
+    if (std::cin and d1 == '.' and d2 == '.' and d3 == '.' and a >= 0 and a <= 255 and b >= 0 and b <= 255 and c >= 0 and c <= 255 and d >= 0 and d <= 255) {
       parts[0] = a;
       parts[1] = b;
       parts[2] = c;
