@@ -9,66 +9,74 @@ struct Coords {
 };
 
 class Rectangle {
- public:
-  Coords leftup;
-  Coords rightdown;
+ private:
+  Coords p_leftup;
+  Coords p_rightdown;
 
+ public:
   int Square () {
-    return std::abs(leftup.x - rightdown.x) * std::abs(leftup.y - rightdown.y);
+    return std::abs(p_leftup.x - p_rightdown.x) * std::abs(p_leftup.y - p_rightdown.y);
   }
 
   void SquareCrossing(std::vector<Rectangle>& rects) {
     Rectangle intersection = rects[0];
     for (size_t i = 1; i < rects.size(); ++i) {
-      int left = std::max(intersection.leftup.x, rects[i].leftup.x);
-      int right = std::min(intersection.rightdown.x, rects[i].rightdown.x);
-      int top = std::max(intersection.leftup.y, rects[i].leftup.y);
-      int bottom = std::min(intersection.rightdown.y, rects[i].rightdown.y);
+      int left = std::max(intersection.p_leftup.x, rects[i].p_leftup.x);
+      int right = std::min(intersection.p_rightdown.x, rects[i].p_rightdown.x);
+      int top = std::max(intersection.p_leftup.y, rects[i].p_leftup.y);
+      int bottom = std::min(intersection.p_rightdown.y, rects[i].p_rightdown.y);
 
       if (left > right or top > bottom) {
         std::cout << "None";
         return;
       }
-      intersection.leftup = {left, top};
-      intersection.rightdown = {right, bottom};
+      intersection.p_leftup = {left, top};
+      intersection.p_rightdown = {right, bottom};
     }
     std::cout << intersection.Square();
   }
 
   void RectangleUnion(std::vector<Rectangle>& rects) {
-    int left = rects[0].leftup.x;
-    int top = rects[0].leftup.y;
-    int right = rects[0].rightdown.x;
-    int bottom = rects[0].rightdown.y;
+    int left = rects[0].p_leftup.x;
+    int top = rects[0].p_leftup.y;
+    int right = rects[0].p_rightdown.x;
+    int bottom = rects[0].p_rightdown.y;
 
     for (size_t i = 1; i < rects.size(); ++i) {
-      left = std::min(left, rects[i].leftup.x);
-      top = std::min(top, rects[i].leftup.y);
-      right = std::max(right, rects[i].rightdown.x);
-      bottom = std::max(bottom, rects[i].rightdown.y);
+      left = std::min(left, rects[i].p_leftup.x);
+      top = std::min(top, rects[i].p_leftup.y);
+      right = std::max(right, rects[i].p_rightdown.x);
+      bottom = std::max(bottom, rects[i].p_rightdown.y);
     }
 
     std::cout << left << ' ' << top << ' ' << right << ' ' << bottom;
   }
+
+  std::vector<Rectangle> Input() {
+    int n = 0;
+    std::cin >> n;
+    std::vector<Rectangle> rects(n);
+    for (int i = 0; i < n; ++i) {
+      Rectangle rectangle;
+      std::cin >> rectangle.p_leftup.x >> rectangle.p_leftup.y;
+      std::cin >> rectangle.p_rightdown.x >> rectangle.p_rightdown.y;
+      rects[i] = rectangle;
+    }
+    return rects;
+  }
+
+  void Output(std::vector<Rectangle>& rects) {
+    SquareCrossing(rects);
+    std::cout << '\n';
+    RectangleUnion(rects);
+  }
 };
 
 int main() {
-  //  ввод координат
-  int n = 0;
-  std::cin >> n;
-  std::vector<Rectangle> rects(n);
-  for (int i = 0; i < n; ++i) {
-    Rectangle rectangle;
-    std::cin >> rectangle.leftup.x >> rectangle.leftup.y;
-    std::cin >> rectangle.rightdown.x >> rectangle.rightdown.y;
-    rects[i] = rectangle;
-  }
-
   Rectangle r;
-
-  r.SquareCrossing(rects);
-  std::cout << '\n';
-  r.RectangleUnion(rects);
+  std::vector<Rectangle> rects = r.Input();
+  r.Output(rects);
+  return 0;
 
   /*
   ---тест 1
