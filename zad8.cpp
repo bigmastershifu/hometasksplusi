@@ -4,6 +4,10 @@
 #include <cstdint>
 #include <bit>
 
+const int cSdvid = 52;
+const int cDrugoi_sdvig = 1023;
+const int cMask = 0b11111111111;
+
 long long Log2(long long x) {
   //  глобально тут мы ищем старший бит
   if (x <= 0) {
@@ -19,8 +23,8 @@ long long Log2(long long x) {
 
 long long Log2(double d) {
   uint64_t bits = std::bit_cast<uint64_t>(d);
-  int exp = (bits >> 52) & 0b11111111111; //  сдвинули на 52 позиции получили экспоненту и знак а потом выкинули знак
-  return exp - 1023;  //  так надо
+  int exp = (bits >> cSdvid) & cMask; //  сдвинули на 52 позиции получили экспоненту и знак а потом выкинули знак
+  return exp - cDrugoi_sdvig;  //  так надо
 }
 
 void tests() {
