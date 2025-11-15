@@ -1,56 +1,58 @@
 #include <iostream>
 #include <vector>
+#include <cassert>
 
-std::vector<char> polind(std::vector<char>& s) {
-  int n = s.size();
-  int maxlenth = 1;
+std::vector<char> FindPalindrome(std::vector<char>& s) {
+  int str_size = s.size();
+  int max_lenth = 1;
   int start = 0;
 
-  for (int i = 0; i < n; ++i) {
-    for (int j = i; j < n; ++j) {
+  for (int i = 0; i < str_size; ++i) {
+    for (int j = i; j < str_size; ++j) {
       int lenth = j - i + 1;
       int left = i;
       int right = j;
-      bool palindtrue = true;
+      bool is_palindrome = true;
 
       while (left < right) {
         if (s[left] != s[right]) {
-          palindtrue = false;
+          is_palindrome = false;
           break;
         }
         ++left;
         --right;
       }
 
-      if (palindtrue and lenth > maxlenth) {
-        maxlenth = lenth;
+      if (is_palindrome and lenth > max_lenth) {
+        max_lenth = lenth;
         start = i;
       }
     }
   }
 
-  std::vector<char> res;
-  for (int i = start; i < start + maxlenth; ++i) {
-    res.push_back(s[i]);
+  std::vector<char> result;
+  for (int i = start; i < start + max_lenth; ++i) {
+    result.push_back(s[i]);
   }
 
-  return res;
+  return result;
+}
+
+void test1() {
+  std::vector<char> str_1 = {'c', 'a', 'b', 'b', 'a', 'x'};
+  std::vector<char> expected = {'a', 'b', 'b', 'a'};
+  assert(FindPalindrome(str_1) == expected);
+}
+
+void test2() {
+  std::vector<char> str_2 = {'c', 'a', 'b', 'r', 'y', 'x'};
+  std::vector<char> expected = {'c'};
+  assert(FindPalindrome(str_2) == expected);
 }
 
 int main() {
-  std::vector<char> s1 = {'c', 'a', 'b', 'b', 'a', 'x'};
-  std::vector<char> s2 = {'c', 'a', 'b', 'r', 'y', 'x'};
-  std::vector<char> palindrome1 = polind(s1);
-  std::vector<char> palindrome2 = polind(s2);
-
-
-  for (auto c : palindrome1) {
-    std::cout << c << ' ';
-  }
-  std::cout << '\n';
-  for (auto c : palindrome2) {
-    std::cout << c << ' ';
-  }
+  test1();
+  test2();
 
   return 0;
 }
