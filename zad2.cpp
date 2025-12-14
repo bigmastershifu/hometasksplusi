@@ -1,25 +1,16 @@
 #include <iostream>
 
 class List {
- private:
-  struct Node {
-    int value;
-    Node* next;
-  };
-
-  Node* head = nullptr;
-  Node* tail = nullptr;
-
  public:
   List() {
     head = nullptr;
     tail = nullptr;
   }
-  bool empty() {
+  bool Empty() {
     return head == nullptr;
   }
 
-  void show() {
+  void Show() {
     Node* current = head;
     while (current != nullptr) {
       std::cout << current->value << ' ';
@@ -28,7 +19,7 @@ class List {
     std::cout << '\n';
   }
 
-  void push_front(int val) {
+  void Push_front(int val) {
     Node* newNode = new Node{val, head};
     head = newNode;
     if (tail == nullptr) {
@@ -36,7 +27,7 @@ class List {
     }
   }
 
-  void push_back(int val) {
+  void Push_back(int val) {
     Node* newNode = new Node{val, nullptr};
     if (tail != nullptr) {
       tail->next = newNode;
@@ -46,7 +37,7 @@ class List {
     tail = newNode;
   }
 
-  void pop_front() {
+  void Pop_front() {
     if (head == nullptr) {
       return;
     }
@@ -58,7 +49,7 @@ class List {
     delete temp;
   }
 
-  void pop_back() {
+  void Pop_back() {
     if (head == nullptr) {
       return;
     }
@@ -77,7 +68,7 @@ class List {
     tail->next = nullptr;
   }
 
-  int get() {
+  int Get() {
     if (head == nullptr) {
       std::cout << "empty" << '\n';
       return -1;
@@ -99,6 +90,15 @@ class List {
     }
     tail = nullptr;
   }
+
+ private:
+  struct Node {
+    int value;
+    Node* next;
+  };
+
+  Node* head = nullptr;
+  Node* tail = nullptr;
 };
 
 int main() {
@@ -108,14 +108,13 @@ int main() {
   for (int i = 0; i < n; ++i) {
     int cur = 0;
     std::cin >> cur;
-    list.push_back(cur);
+    list.Push_back(cur);
   }
-  list.show();
+  list.Show();
   std::cout << '\n';
-  list.pop_front();
-  list.pop_back();
-  std::cout << list.get();
-
+  list.Pop_front();
+  list.Pop_back();
+  std::cout << list.Get();
 
   return 0;
 }
