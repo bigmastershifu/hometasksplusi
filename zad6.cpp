@@ -1,15 +1,7 @@
 #include <iostream>
 #include <vector>
 
-int main() {
-  int rows = 10;
-  int cols = 10;
-  unsigned int random = 0;
-  std::cin >> random;
-
-  std::vector<std::vector<int>> desk(rows, std::vector<int>(cols, 0));
-  std::vector<std::vector<int>> next_desk(rows, std::vector<int>(cols, 0));
-
+void Random(int random, int rows, int cols, std::vector<std::vector<int>>& desk) {
   for (int i = 0; i < rows; ++i) {
     for (int j = 0; j < cols; ++j) {
       random = random * 16623665 + 1013904666;
@@ -20,13 +12,10 @@ int main() {
       }
     }
   }
+}
 
-  while (true) {
-    for (int n = 0; n < 50; ++n) {
-      std::cout << '\n';
-    }
-
-    for (int i = 0; i < rows; ++i) {
+void Print(int rows, int cols, std::vector<std::vector<int>>& desk) {
+  for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         if (desk[i][j] == 1) {
           std::cout << "# ";
@@ -36,8 +25,10 @@ int main() {
       }
       std::cout << '\n';
     }
+}
 
-    for (int i = 0; i < rows; ++i) {
+void NewDesk(int rows, int cols, std::vector<std::vector<int>>& desk, std::vector<std::vector<int>>& next_desk) {
+  for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
         int neighbors = 0;
 
@@ -72,12 +63,35 @@ int main() {
         }
       }
     }
+}
+
+int main() {
+  int rows = 10;
+  int cols = 10;
+  unsigned int random = 0;
+  std::cin >> random;
+
+  std::vector<std::vector<int>> desk(rows, std::vector<int>(cols, 0));
+  std::vector<std::vector<int>> next_desk(rows, std::vector<int>(cols, 0));
+
+  Random(random, rows, cols, desk);
+
+  while (true) {
+    for (int n = 0; n < 50; ++n) {
+      std::cout << '\n';
+    }
+    //  типо отчистка терминала
+
+    Print(rows, cols, desk);
+
+    NewDesk(rows, cols, desk, next_desk);
+
     if (desk == next_desk) {
       break;
     } else {
       desk = next_desk;
     }
-    for (long long k = 0; k < 266666666; ++k) {}
+    for (long long k = 0; k < 266666666; ++k) {}  //  для медленного вывода
   }
   return 0;
 }
